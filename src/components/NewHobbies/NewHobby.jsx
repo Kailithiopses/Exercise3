@@ -1,7 +1,10 @@
 import "./NewHobbiesStylesheets/NewHobby.css";
 import HobbyForm from "./HobbyForm";
+import { useState } from "react";
 
 const NewHobby = (props) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   const saveHobbyDataHandler = (enteredHobby) => {
     const hobbyData = {
       ...enteredHobby,
@@ -9,10 +12,28 @@ const NewHobby = (props) => {
     };
     console.log(hobbyData);
     props.onAddHobby(hobbyData);
+    setIsEditing(false);
   };
+
+  const startEditingHandler = () => {
+    setIsEditing(true);
+  };
+
+  const stopEditingHandler = () => {
+    setIsEditing(false);
+  };
+
   return (
     <div className="new-hobby">
-      <HobbyForm onSaveHobbyData={saveHobbyDataHandler} />
+      {!isEditing && (
+        <button onClick={startEditingHandler}>Add New Hobby</button>
+      )}
+      {isEditing && (
+        <HobbyForm
+          onSaveHobbyData={saveHobbyDataHandler}
+          onCancel={stopEditingHandler}
+        />
+      )}
     </div>
   );
 };

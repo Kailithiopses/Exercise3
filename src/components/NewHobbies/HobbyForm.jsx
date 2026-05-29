@@ -66,6 +66,9 @@ const HobbyForm = (props) => {
         </div>
       </div>
       <div className="new-hobby__actions">
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add Hobby</button>
       </div>
     </form>
