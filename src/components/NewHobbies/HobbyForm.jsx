@@ -1,5 +1,5 @@
 import "./NewHobbiesStylesheets/HobbyForm.css";
-import { use, useState } from "react";
+import { useState } from "react";
 
 const HobbyForm = (props) => {
   //const [isValid, setIsValid] = useState(true);
@@ -9,45 +9,84 @@ const HobbyForm = (props) => {
 
   const [enteredTitle, setEnteredTitle] = useState("");
   const titleChangeHandler = (event) => {
-    if (event.target.title.trim().length > 0) {
+    if (event.target.value.trim().length > 0) {
       setTitleIsValid(true);
     }
 
-    setEnteredTitle(event.target.title);
+    setEnteredTitle(event.target.value);
   };
 
   const [enteredDesc, setEnteredDesc] = useState("");
   const descChangeHandler = (event) => {
-    if (event.target.desc.trim().length > 0) {
+    if (event.target.value.trim().length > 0) {
       setDescIsValid(true);
     }
 
-    setEnteredDesc(event.target.desc);
+    setEnteredDesc(event.target.value);
   };
 
   const [enteredAmount, setEnteredAmount] = useState("");
   const amountChangeHandler = (event) => {
-    if (event.target.amount.trim().length > 0) {
+    if (event.target.value.trim().length > 0) {
       setAmountIsValid(true);
     }
 
-    setEnteredAmount(event.target.amount);
+    setEnteredAmount(event.target.value);
   };
 
   const submitHandler = (event) => {
     // Handle clicking submit button
     event.preventDefault(); // Prevent page from refreshing
-    if (hobbyData.title.trim().length === 0) {
+    if (
+      // All 3
+      enteredTitle.trim().length === 0 &&
+      enteredDesc.trim().length === 0 &&
+      enteredAmount.trim().length === 0
+    ) {
       setTitleIsValid(false);
+      setDescIsValid(false);
+      setAmountIsValid(false);
       return;
-    }
-
-    if (hobbyData.desc.trim().length === 0) {
+    } else if (
+      // 1 and 2
+      enteredTitle.trim().length === 0 &&
+      enteredDesc.trim().length === 0
+    ) {
+      setTitleIsValid(false);
       setDescIsValid(false);
       return;
-    }
-
-    if (hobbyData.amount.trim().length === 0) {
+    } else if (
+      // 2 and 3
+      enteredDesc.trim().length === 0 &&
+      enteredAmount.trim().length === 0
+    ) {
+      setDescIsValid(false);
+      setAmountIsValid(false);
+      return;
+    } else if (
+      // 1 and 3
+      enteredTitle.trim().length === 0 &&
+      enteredAmount.trim().length === 0
+    ) {
+      setTitleIsValid(false);
+      setAmountIsValid(false);
+      return;
+    } else if (
+      // 1
+      enteredTitle.trim().length == 0
+    ) {
+      setTitleIsValid(false);
+      return;
+    } else if (
+      // 2
+      enteredDesc.trim().length === 0
+    ) {
+      setDescIsValid(false);
+      return;
+    } else if (
+      // 3
+      enteredAmount.trim().length === 0
+    ) {
       setAmountIsValid(false);
       return;
     }
@@ -55,7 +94,7 @@ const HobbyForm = (props) => {
     const hobbyData = {
       title: enteredTitle,
       desc: enteredDesc,
-      amount: enteredAmount,
+      timeSpent: enteredAmount,
     };
     props.onSaveHobbyData(hobbyData);
 
